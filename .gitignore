@@ -1,0 +1,15 @@
+node_modules/
+out/
+*.vsix
+.vscode-test/
+
+# graphify-axet
+.graphify/
+.graphifyignore
+.vscodeignore
+AGENTS.md
+project.md
+.planning/
+temp/
+.vscode/
+scripts/test-contract.js
