@@ -20,6 +20,7 @@ export interface TerminalHandle {
 
 export interface TerminalFactory {
   create(name: string, cwd: vscode.Uri): TerminalHandle;
+  findExisting(name: string): TerminalHandle | undefined;
   onDidClose(listener: (terminal: TerminalHandle) => void): vscode.Disposable;
   onDidEndShellExecution(listener: (terminal: TerminalHandle, exitCode: number | undefined) => void): vscode.Disposable;
 }
@@ -32,6 +33,7 @@ export interface ProcessManagerDependencies {
   readonly reportError: (message: string) => Thenable<string | undefined>;
   readonly locale?: string;
   readonly reportInfo?: (message: string) => Thenable<string | undefined>;
+  readonly confirmReuseTerminal?: (name: string) => Thenable<boolean | undefined>;
 }
 
 export class ProcessLifecycleError extends Error {

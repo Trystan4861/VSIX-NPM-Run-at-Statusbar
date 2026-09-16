@@ -34,6 +34,16 @@ export class VsCodeTerminalFactory implements TerminalFactory {
     return handle;
   }
 
+  public findExisting(name: string): TerminalHandle | undefined {
+    const terminal = vscode.window.terminals.find((candidate) => candidate.name === name);
+    if (!terminal) return undefined;
+    const existingHandle = [...this.handles].find((handle) => handle.matches(terminal));
+    if (existingHandle) return existingHandle;
+    const handle = new VsCodeTerminalHandle(terminal);
+    this.handles.add(handle);
+    return handle;
+  }
+
   public onDidClose(listener: (terminal: TerminalHandle) => void): vscode.Disposable {
     return vscode.window.onDidCloseTerminal((terminal) => {
       for (const handle of this.handles) {

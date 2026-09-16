@@ -89,6 +89,8 @@ While a process is running, its hover menu exposes **Show terminal**, **Restart*
 
 The default labels are `Backend` and `Frontend`; they can be changed with the rename actions or the `backendLabel` and `frontendLabel` settings. The controls are hidden when there is no workspace or when `showStatusBarItems` is disabled.
 
+When starting a process, if an integrated terminal with the same process name already exists, the extension asks whether to reuse it. Choosing to create a new terminal preserves the previous behavior.
+
 ## Commands
 
 - `VSIX Terminal Launcher: Start Backend`

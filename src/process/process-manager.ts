@@ -69,9 +69,17 @@ export class ProcessManager {
         throw new ProcessLifecycleError('missing-command', `Configure the ${label} command before starting it.`);
       }
       const cwd = await this.dependencies.resolveWorkingDirectory(folder, configuration.workingDirectory);
-      terminal = this.dependencies.terminalFactory.create(label, cwd);
+      const existingTerminal = this.dependencies.terminalFactory.findExisting(label);
+      const reuseExisting = existingTerminal && this.dependencies.confirmReuseTerminal
+        ? await this.dependencies.confirmReuseTerminal(label)
+        : false;
+      const selectedTerminal = reuseExisting && existingTerminal
+        ? existingTerminal
+        : this.dependencies.terminalFactory.create(label, cwd);
+      terminal = selectedTerminal;
+      if (!terminal) throw new Error('No terminal was selected.');
       terminal.sendText(configuration.command, true);
-      entry.terminal = terminal;
+      entry.terminal = selectedTerminal;
       entry.workspaceFolder = folder;
       entry.workingDirectory = cwd;
       entry.state = 'running';

@@ -34,7 +34,12 @@ export function activate(context: vscode.ExtensionContext): void {
     resolveWorkingDirectory: (folder, cwd) => resolver.resolveWorkingDirectory(folder, cwd),
     terminalFactory,
     reportError: (message) => vscode.window.showErrorMessage(message),
-    locale: vscode.env.language
+    locale: vscode.env.language,
+    confirmReuseTerminal: (name) => vscode.window.showInformationMessage(
+      `A ${name} terminal already exists. Reuse it?`,
+      'Reuse terminal',
+      'Create new terminal'
+    ).then((choice) => choice === 'Reuse terminal')
   });
   context.subscriptions.push(terminalFactory.onDidClose((terminal) => manager.handleClosedTerminal(terminal)));
   context.subscriptions.push(terminalFactory.onDidEndShellExecution((terminal, exitCode) => manager.handleShellExecutionEnded(terminal, exitCode)));
