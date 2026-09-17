@@ -57,11 +57,12 @@ export class StatusBarController implements vscode.Disposable {
       tooltip.supportThemeIcons = true;
       tooltip.appendMarkdown(`**${label}**\n\n---\n\n`);
       if (configured && running) {
+        tooltip.appendMarkdown(`$(debug-stop) [${ui.stop}](command:${kind === 'backend' ? 'vsixTerminalLauncher.stopBackend' : 'vsixTerminalLauncher.stopFrontend'})  \n`);
         tooltip.appendMarkdown(`$(sync) [${ui.restart}](command:${kind === 'backend' ? 'vsixTerminalLauncher.restartBackend' : 'vsixTerminalLauncher.restartFrontend'})  \n`);
       } else {
         tooltip.appendMarkdown(`$(play) [${ui.start}](command:${startCommandIds[kind]})  \n`);
+        tooltip.appendMarkdown(`$(settings-gear) [${ui.configure}](command:${configureCommandIds[kind]})  \n`);
       }
-      tooltip.appendMarkdown(`$(settings-gear) [${ui.configure}](command:${configureCommandIds[kind]})  \n`);
       tooltip.appendMarkdown(`$(edit) [${ui.rename}](command:${kind === 'backend' ? 'vsixTerminalLauncher.renameBackend' : 'vsixTerminalLauncher.renameFrontend'})`);
       item.tooltip = tooltip;
       if (this.showItems() && resource !== undefined) item.show();

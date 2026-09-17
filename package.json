@@ -2,7 +2,7 @@
   "name": "npm-run-statusbar",
   "displayName": "NPM Run at Statusbar",
   "description": "Launch and manage Backend and Frontend workspace processes in integrated VS Code terminals.",
-  "version": "0.1.23",
+  "version": "0.1.25",
   "publisher": "trystan4861",
   "license": "MIT",
   "repository": {
